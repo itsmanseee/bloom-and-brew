@@ -169,6 +169,7 @@ footer{background:var(--forest-dark);padding:5rem 3rem 2.5rem;position:relative;
 .soc:hover{border-color:var(--gold);color:var(--gold)}
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.no-js .reveal,.reveal.visible{opacity:1!important;transform:translateY(0)!important}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.12s}.d2{transition-delay:.22s}.d3{transition-delay:.32s}.d4{transition-delay:.42s}.d5{transition-delay:.52s}
 /* KEYFRAMES */
@@ -528,7 +529,11 @@ window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",window.scro
 function toggleMob(){document.getElementById("mobMenu").classList.toggle("open");document.getElementById("burger").classList.toggle("open")}
 function closeMob(){document.getElementById("mobMenu").classList.remove("open");document.getElementById("burger").classList.remove("open")}
 document.querySelectorAll(".reveal").forEach(el=>{
-  new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("visible")})}),{threshold:.1,rootMargin:"0px 0px -36px 0px"}).observe(el)
+  new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add("visible")}
+    });
+  },{threshold:0.12}).observe(el);
 });
 document.querySelectorAll(".tab-btn").forEach(btn=>{
   btn.addEventListener("click",function(){
@@ -544,19 +549,15 @@ document.querySelectorAll(".mc-add").forEach(btn=>{
     setTimeout(()=>{this.textContent="+";this.style.background="";this.style.color="";},1600);
   });
 });
+// Fallback: show all reveals if observer takes too long
+setTimeout(()=>{document.querySelectorAll(".reveal:not(.visible)").forEach(e=>e.classList.add("visible"))},800);
 const secs=document.querySelectorAll("section[id]");
 const lnks=document.querySelectorAll(".nav-links a");
 window.addEventListener("scroll",()=>{
   let cur="";secs.forEach(s=>{if(window.pageYOffset>=s.offsetTop-180)cur=s.id});
   lnks.forEach(l=>{l.style.color=l.getAttribute("href")==="#"+cur?"var(--gold-light)":""});
 });
-// Fix reveal observer
-document.querySelectorAll(".reveal").forEach(el=>{
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target)}})
-  },{threshold:.1});
-  obs.observe(el);
-});
+
 </script>
 </body>
 </html>
