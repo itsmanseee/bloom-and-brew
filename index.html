@@ -58,17 +58,9 @@ nav.scrolled { background: rgba(28,51,41,.96); backdrop-filter: blur(14px); padd
 .hero-photo { position: relative; opacity: 0; animation: fadeIn 1s ease 1s forwards; display: flex; align-items: center; justify-content: center; }
 .hero-illus-wrap { display: flex; align-items: center; justify-content: center; }
 .hero-cafe-illus { width: 100%; max-width: 460px; display: block; filter: drop-shadow(0 28px 60px rgba(0,0,0,.45)); animation: gentleBounce 3.2s ease-in-out infinite; }
-/* Featured section illustration — watercolour in parchment card */
-.feat-illus-card {
-  background: #F7EDD9;
-  border-radius: 28px;
-  padding: 2.5rem 2rem 1.5rem;
-  box-shadow: 0 32px 80px rgba(0,0,0,.32), 0 0 0 1px rgba(255,255,255,.08);
-  display: flex; align-items: flex-end; justify-content: center;
-  min-height: 440px;
-  animation: floatA 6s ease-in-out 2s infinite;
-}
-.feat-watercolor-illus { width: 100%; max-width: 300px; display: block; }
+/* Featured section photo */
+.feat-photo { border-radius: var(--r-2xl); overflow: hidden; height: 480px; box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+.feat-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 /* Floating stat card */
 .hero-stat-card { position: absolute; top: 2rem; right: 0; background: var(--gold); color: var(--forest-dark); border-radius: var(--r-lg); padding: 1.1rem 1.4rem; box-shadow: 0 8px 24px rgba(196,154,90,.4); text-align: center; z-index: 3; }
 .hero-stat-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1; }
@@ -222,7 +214,7 @@ footer { background: var(--forest-dark); padding: 5rem 3rem 2.5rem; }
   .hero-cafe-illus { max-width: 320px; }
   .hero-stat-card { top: 1rem; right: 0; }
   .about-photo-img { height: 400px; }
-  .feat-illus-card { min-height: 340px; padding: 2rem 1.5rem 1rem; } .feat-watercolor-illus { max-width: 240px; }
+  .feat-photo { height: 360px; }
   .gallery-grid { grid-template-columns: repeat(2,1fr); }
   .g-item.tall { grid-row: span 1; height: 260px; }
 }
@@ -527,8 +519,8 @@ footer { background: var(--forest-dark); padding: 5rem 3rem 2.5rem; }
         <a href="#visit" class="btn btn-primary">Plan Your Visit</a>
       </div>
     </div>
-    <div class="feat-illus-card reveal d2">
-      <img class="feat-watercolor-illus" src="assets/images/cafe-illustration.png" alt="Bloom and Brew Cafe watercolour illustration">
+    <div class="feat-photo reveal d2">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&h=840&fit=crop&q=85&crop=entropy" alt="Live acoustic music night at the cafe" loading="lazy">
     </div>
   </div>
 </section>
