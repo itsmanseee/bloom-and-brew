@@ -1,0 +1,39 @@
+name: Fetch Photos
+on: workflow_dispatch
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download photos
+        run: |
+          mkdir -p assets/photos
+          declare -A photos=(
+            ["hero-music"]="photo-1414235077428-338989a2e8c0?w=900&h=1080&fit=crop&q=90&crop=entropy"
+            ["space-interior"]="photo-1445116572660-236099ec97a0?w=1200&h=1333&fit=crop&q=90&crop=entropy"
+            ["gallery-barista"]="photo-1453614512568-c4024d13c247?w=900&h=720&fit=crop&q=90&crop=entropy"
+            ["menu-smoothie"]="photo-1490474418585-ba9bad8fd0ea?w=800&h=587&fit=crop&q=90&crop=entropy"
+            ["about-pourover"]="photo-1495474472287-4d71bcdd2085?w=900&h=1080&fit=crop&q=90&crop=entropy"
+            ["gallery-atmosphere"]="photo-1501339847302-ac426a4a7cbb?w=900&h=566&fit=crop&q=90&crop=entropy"
+            ["gallery-cup"]="photo-1509042239860-f550ce710b93?w=900&h=566&fit=crop&q=90&crop=entropy"
+            ["menu-espresso"]="photo-1514432324607-a09d9b4aefdd?w=800&h=587&fit=crop&q=90&crop=entropy"
+            ["menu-matcha"]="photo-1515823064-d6e0c04616a7?w=800&h=587&fit=crop&q=90&crop=entropy"
+            ["gallery-beans"]="photo-1542181961-9590d0c79dab?w=900&h=566&fit=crop&q=90&crop=entropy"
+            ["menu-croissant"]="photo-1555507036-ab1f4038808a?w=800&h=587&fit=crop&q=90&crop=entropy"
+            ["menu-scone"]="photo-1558961363-fa8fdf82db35?w=800&h=587&fit=crop&q=90&crop=entropy"
+            ["gallery-latte"]="photo-1616348436168-de43ad0db179?w=900&h=566&fit=crop&q=90&crop=entropy"
+            ["menu-avocado"]="photo-1628556820645-63ba5f90e6a2?w=800&h=587&fit=crop&q=90&crop=entropy"
+          )
+          for name in "${!photos[@]}"; do
+            url="https://images.unsplash.com/${photos[$name]}"
+            curl -sL "$url" -o "assets/photos/${name}.jpg"
+            size=$(wc -c < "assets/photos/${name}.jpg")
+            echo "$name: ${size} bytes"
+          done
+      - name: Commit photos
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add assets/photos/
+          git commit -m "📸 Fetch real photos via Actions (full internet access)" || echo "nothing to commit"
+          git push
